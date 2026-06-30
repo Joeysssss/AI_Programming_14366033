@@ -1,0 +1,34 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String @id @default(uuid())
+  username String @unique
+  password String // Hashed or plaintext for demo
+  role     String // CITIZEN, POLICE, MANAGEMENT
+}
+
+model Incident {
+  id          String   @id @default(uuid())
+  type        String
+  description String
+  locationLat Float
+  locationLng Float
+  status      String   // REPORTED, RESOLVED
+  timestamp   DateTime @default(now())
+}
+
+model TrafficSignal {
+  id          String @id
+  locationLat Float
+  locationLng Float
+  state       String // RED, GREEN, YELLOW
+  timer       Int
+  mode        String // AUTO, MANUAL
+}
